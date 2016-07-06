@@ -6,7 +6,7 @@
 # source("/Users/yangguodaxia/Dropbox/Tech/R/attach_Load_First.R")
 # source("S:/Users/Fan Yang/Research/Core_Code/attach_Load_First.R")
 # source("H:/jpmDesk/Desktop/Personal/Research_personal/Core_Code/linear_tools.R"
-# source("/Users/yangguodaxia/linear.tools/linear_tools_origin.R")
+# source("/Users/yangguodaxia/Dropbox/Tech/R/linear_tools_origin.R")
 
 
 # key problem is predict() cannot handle dirty formula, when the newdata does not contain empty vars in dirty formula
@@ -20,7 +20,7 @@ library(plyr)
 library(stringr)
 library(scales)
 #  data.table(ggplot2::diamonds)
-# version
+
 
 ###  Not Exported ==================
 
@@ -39,21 +39,21 @@ library(scales)
 #' @param PRINT  whether print diagnostic information.
 #' @return a 'purified' named list / character vector , with all names not showing up in `checking` deleted.
 #' @examples
-#'
+#' 
 #' tobechecked = list('cut' = 1, 'dwewsdfds' = 2); checking = 'cut'
-#'
+#' 
 #' result =   check_names_delete(tobechecked, checking, STOP = FALSE,
 #'                               tobechecked_name = 'focus_var',
 #'                               checking_name = 'all_raw_vars')
 #' result
-#'
+#' 
 #' result = check_names_delete(tobechecked, checking, STOP = FALSE)
 #' result
-#'
+#' 
 #' tobechecked = c('cut', 'dsfsf'); checking = 'cut'
 #' result = check_names_delete(tobechecked, checking, STOP = FALSE)
 #' result
-#'
+#' 
 check_names_delete = function(tobechecked, checking,
                               STOP = TRUE,
                               tobechecked_name = 'tobechecked' , checking_name = 'checking',
@@ -129,15 +129,15 @@ check_names_delete = function(tobechecked, checking,
 #' @param modle  a lm or glm.
 #' @return a data.frame used as raw data for the model.
 #' @examples
-#'
+#' 
 #' data_used = ggplot2::diamonds[0:10,]
 #' model = lm(price~ cut + carat + I(carat^2) + I(carat^3) +
 #'              I(carat  * depth) + cut:depth, data_used) # a GLM
 #' get_data_from_lm(model)
-#'
+#' 
 #' data_used = 'data_used is deleted in this environment'
 #' get_data_from_lm(model)
-#'
+#' 
 get_data_from_lm = function(model){
 
   ## get raw data from lm or glm
@@ -184,9 +184,9 @@ get_data_from_lm = function(model){
 #' @return Type through keyboard to continue in console.
 #'
 #' @examples
-#'
+#' 
 #' Enter_to_Continue(rbind(c('small','small data'),c('n','normal'),c('w','weird curve')))
-#'
+#' 
 Enter_to_Continue = function(df_input_output = NULL){
 
   ## Enter_to_Continue: wait your response to continue
@@ -398,21 +398,21 @@ is_decrease = function(x){
 #' 3. with valid common one-dimensional slicing method, like x[1] etc, # so factor, character, numeric will pass the check
 #' 4. not all elements being NA.
 #' @examples
-#'
+#' 
 #' check_vec_meaningful(c(NA,NA)) # NOT PASS
-#'
+#' 
 #' tryCatch(check_vec_meaningful(x=list(NA,NaN)),
 #'          error = function(err){
 #'            print(err)
 #'            }
 #'          )# NOT PASS
-#'
+#' 
 #' check_vec_meaningful(c(NA,1)) # PASS
 #' check_vec_meaningful(c(NULL,1)) # PASS
 #' check_vec_meaningful(factor(c(NA,1,1))) # PASS
 #' check_vec_meaningful(1) # PASS
 #' check_vec_meaningful('1') # PASS
-#'
+#' 
 check_vec_meaningful = function (x){
 
   # an attach_Load_First.R function
@@ -487,10 +487,10 @@ check_vec_meaningful = function (x){
 #' @description a single function that can do several different types of sanity checks at the same time
 #' @details See sample code
 #' @examples
-#'
+#' 
 #' ###_____ unit test ____
-#'
-#'
+#' 
+#' 
 #' data = ggplot2::diamonds
 #' # sanity_check(dasfdfdsfsgre)
 #' null_checl = NULL ;
@@ -498,26 +498,26 @@ check_vec_meaningful = function (x){
 #'           error = function(err) print(err))
 #' tryCatch( sanity_check(null_checl,NULL_allowed = TRUE),
 #'           error = function(err) print(err))
-#'
-#'
+#' 
+#' 
 #' tryCatch( sanity_check(c('x','y'),min_oberserv = 3),
 #'           error = function(err) print(err))
 #' tryCatch( sanity_check(c('x','y'),min_oberserv = 2),
 #'           error = function(err) print(err))
-#'
+#' 
 #' tryCatch( sanity_check(data,Class = 'data.frame2'),
 #'           error = function(err) print(err))
 #' tryCatch( sanity_check(data,min_oberserv = 3000000),
 #'           error = function(err) print(err))
-#'
+#' 
 #' tryCatch( sanity_check(data,exact_length = ncol(data) ),
 #'           error = function(err) print(err))
 #' tryCatch( sanity_check(
 #'   data.frame(data,NA,stringsAsFactors = FALSE)[1:10,],
 #'                        complete_cases = TRUE ),
 #'           error = function(err) print(err))
-#'
-#'
+#' 
+#' 
 #' colnames(data)
 #' tryCatch( sanity_check(x= c('carat') ,exact_in_match = data),
 #'           error = function(err) print(err))
@@ -527,13 +527,13 @@ check_vec_meaningful = function (x){
 #'           error = function(err) print(err))
 #' tryCatch(  sanity_check(x= c('carat','carat2') ,exact_in_match = data),
 #'            error = function(err) print(err))
-#'
+#' 
 #' tryCatch(  sanity_check(x=colnames(data),exact_in_match = c('carat')),
 #'            error = function(err) print(err))
-#'
+#' 
 #' tryCatch(   sanity_check(x=data,exact_in_match = c('carat2')),
 #'             error = function(err) print(err))
-#'
+#' 
 sanity_check = function(x ,
                         NULL_allowed = FALSE, # whether is.NULL is allowed
                         Class = NULL, # Class is the correct class that class(x) should contains
@@ -797,9 +797,9 @@ sanity_check = function(x ,
 #' @param sign the correct sign: 1 or -1
 #' @return a boolean, whehter x is a valid numeric.
 #' @examples
-#'
+#' 
 #' check_single_numeric(x = nrow(ggplot2::diamonds))
-#'
+#' 
 check_single_numeric = function(x, sign = 1){
 
   # an attach_Load_First.R function
@@ -919,56 +919,56 @@ stripGlmLR = function(model) {
 #' @seealso \code{\link{get_x}}
 #' @return  \code{\link{get_x}}
 #' @examples
-#'
+#' 
 #' #
 #' data = ggplot2::diamonds
 #' diamond_lm  =  lm(price~  I(carat^   2) + cut  + carat*table ,ggplot2::diamonds)
-#'
+#' 
 #' #_________ input as model
 #' get_x_hidden(model = diamond_lm,method = 'raw')
 #' get_x_hidden(diamond_lm,method = 'model')
 #' get_x_hidden(diamond_lm,method = 'coeff')
-#'
+#' 
 #' #_______ input as formula
 #' get_x_hidden(formula(diamond_lm),method = 'model')
 #' # data is required when input is formula
 #' get_x_hidden(formula(diamond_lm), data = ggplot2::diamonds, method = 'coeff')
-#'
+#' 
 #' tryCatch(
 #'   get_x_hidden(formula(diamond_lm),method = 'coeff'),
 #'   error =function(err){
 #'     print(err)
 #'   }
 #' )
-#'
-#'
-#'
-#'
-#'
+#' 
+#' 
+#' 
+#' 
+#' 
 #' #________ irregular formulas __________
-#'
+#' 
 #' model_dirty = model = lm(price~  I(carat^   2) + cut  -
 #'                            carat:table - cut ,ggplot2::diamonds)
-#'
+#' 
 #' # WRONG for raw vars
 #' get_x_hidden(model_dirty)
-#'
+#' 
 #' # correct for model vars
 #' get_x_hidden(price~  I(carat^2) + cut  -
 #'                carat:table - cut,
 #'              data = ggplot2::diamonds, method ='model')
-#'
+#' 
 #' get_x_hidden(model_dirty,method = 'model')
 #' get_x_hidden(model_dirty,data = ggplot2::diamonds, method = 'model')
 #' get_x_hidden(model_dirty, method = 'model')
-#'
+#' 
 #' #___________ coeff vars __________
-#'
+#' 
 #' # clean
 #' get_x_hidden(model_dirty, data = ggplot2::diamonds, method = 'coeff')
 #' get_x_hidden(formula(model_dirty),data = ggplot2::diamonds, method = 'coeff')
-#'
-#'
+#' 
+#' 
 #' #
 #' # # dirty
 #' # attr(terms((price~  I(carat^2) + cut  + carat:table - cut)),"factors") %>% colnames()
@@ -984,7 +984,7 @@ stripGlmLR = function(model) {
 #' # terms((price~  I(carat^2) + cut  - carat:table - cut)) %>% attr(.,"factors") %>% colnames()
 #' # model_dirty %>% terms %>% attr(.,"factors") %>% colnames()
 #' # formula(model_dirty) %>% terms %>% attr(.,"factors") %>% colnames()
-#'
+#' 
 get_x_hidden = function(model,
                         method = c("raw","model","coeff"),
                         data = NULL){
@@ -1178,22 +1178,22 @@ get_x_hidden = function(model,
 #' @export
 #' @return  a pasted formula in string, with all spaces deleted.
 #' @examples
-#'
+#' 
 #' paste_formula(price~carat +cut)
 #' paste_formula(price~carat + cut)
-#'
+#' 
 #' paste_formula(price~carat +cut,exclude_y = TRUE)
 #' paste_formula(Formula = price ~ cut + carat, clean = TRUE)
-#'
+#' 
 #' paste_formula(price~carat +cut - cut, clean = TRUE)
-#'
+#' 
 #' # irregular formulas: cross lines
 #' paste_formula(price~carat +
 #'                 cut ~ dsad)
-#'
+#' 
 #' paste_formula(price~carat +
 #'                 cut ~ dsad,exclude_y = TRUE)
-#'
+#' 
 paste_formula = function(Formula, # a formula, or a model (like glm/lm) so that formula(model) can give a formula
                          exclude_y = FALSE, # whether to exclude y in the pasted formula
                          clean = FALSE
@@ -1282,19 +1282,19 @@ paste_formula = function(Formula, # a formula, or a model (like glm/lm) so that 
 #' Default is 'raw'. See section Detials below.
 #' @return y in formula
 #' @examples
-#'
+#' 
 #' get_y(log(price) ~sdfsf + dsa )
 #' get_y(log(price) ~ sdfsf + dsa, method = "model")
 #' get_y(log(price) ~ sdfsf + dsa, method = "coeff") # same as model var in the get_y() case
-#'
+#' 
 #' # can deal with un-regular formula
 #' get_y(log(price) ~sdfsf + dsa ~ dsad)
 #' get_y(log(price) ~ sdfsf + dsa ~ dsad, method = "coeff")
 #' get_y(log(price) ~ sdfsf + dsa ~ dsad, method = "model")
-#'
+#' 
 #' model_dirty = model = lm(price~  I(carat^   2) + cut  - carat:table - cut ,ggplot2::diamonds)
 #' get_y(model_dirty)
-#'
+#' 
 get_y = function(Formula,method = c("raw","model","coeff")){
   # from attach_load_first.R
 
@@ -1377,23 +1377,23 @@ get_y = function(Formula,method = c("raw","model","coeff")){
 #' @return contrasts of the categorical vars in the model, or the contrast method if \code{return_method} is TRUE.
 #' @references \url{http://www.ats.ucla.edu/stat/r/library/contrast_coding.htm}
 #' @examples
-#'
+#' 
 #' get_contrast(lm(price ~ carat + I(carat^2) + cut:carat +
 #'                   color,ggplot2::diamonds))
 #' get_contrast(lm(price ~ carat + I(carat^2) + cut:carat +
 #'                   color,ggplot2::diamonds),return_method = TRUE)
-#'
+#' 
 #' # dirty formulas: all categorical vars are with minus sign
 #' # no categorical vars, thus no contast
 #' get_contrast(lm(price ~ carat + I(carat^2) ,ggplot2::diamonds))
-#'
+#' 
 #' model_dirty = lm(price ~ carat + I(carat^2) - cut:carat - color,
 #'                  ggplot2::diamonds)
 #' get_contrast(model = model_dirty )
-#'
+#' 
 #' diamond_lm3 = lm(price~ I(cut) + depth,ggplot2::diamonds) # a GLM
 #' get_contrast(model = diamond_lm3 )
-#'
+#' 
 get_contrast = function(model,
                         data = NULL,
                         PRINT = TRUE,
@@ -1519,16 +1519,16 @@ get_contrast = function(model,
 #' See \code{\link{get_x}} for the meaning of model var, coeff var and raw var.
 #' @return a list with names as model vars and elements as their corresponding coeff/raw vars
 #' @examples
-#'
+#' 
 #' # return coeff
 #' get_model_pair(model = price~  I(carat^2) + cut  + carat*table, data = ggplot2::diamonds)
 #' # return raw vars
 #' get_model_pair(price~  I(carat^2) + cut  + carat*table, data= ggplot2::diamonds, pair_with = 'raw')
-#'
+#' 
 #' # correctly deal with irregular formulas
 #' model_dirty = lm(price~  I(carat^   2) + cut  - carat:table - cut ,ggplot2::diamonds)
 #' get_model_pair(model_dirty,pair_with = 'raw')
-#'
+#' 
 get_model_pair = function(model,data = NULL,pair_with = c('coeff','raw')){
 
   # from attach_load_first.R
@@ -1633,49 +1633,49 @@ get_model_pair = function(model,data = NULL,pair_with = c('coeff','raw')){
 #' @import magrittr
 #' @import scales
 #' @examples
-#'
+#' 
 #' # use the sample code from get_x_hidden
 #' #
 #' data = ggplot2::diamonds
 #' diamond_lm  =  lm(price~  I(carat^   2) + cut  + carat*table ,ggplot2::diamonds)
-#'
+#' 
 #' #_________ input as model
 #' get_x(model = diamond_lm,method = 'raw')
 #' get_x(diamond_lm,method = 'model')
 #' get_x(diamond_lm,method = 'coeff')
-#'
+#' 
 #' #_______ input as formula
 #' get_x(formula(diamond_lm),method = 'model')
 #' # data is required when input is formula
 #' get_x(formula(diamond_lm), data = ggplot2::diamonds, method = 'coeff')
-#'
+#' 
 #' tryCatch(
 #'   get_x(formula(diamond_lm),method = 'coeff'),
 #'   error =function(err){
 #'     print(err)
 #'   }
 #' )
-#'
-#'
-#'
+#' 
+#' 
+#' 
 #' #________ irregular formulas __________
-#'
+#' 
 #' model_dirty = model = lm(price~  I(carat^   2) + cut  - carat:table - cut ,ggplot2::diamonds)
-#'
+#' 
 #' # CORRECT for raw vars
 #' get_x(model_dirty)
-#'
+#' 
 #' # correct for model vars
 #' get_x(price~  I(carat^2) + cut  - carat:table - cut,data = ggplot2::diamonds, method ='model')
 #' get_x(model_dirty,method = 'model')
 #' get_x(model_dirty,data = ggplot2::diamonds, method = 'model')
 #' get_x(model_dirty, method = 'model')
-#'
+#' 
 #' # clean method for model vars
 #' # terms((price~  I(carat^2) + cut  - carat:table - cut)) %>% attr(.,"factors") %>% colnames()
 #' # model_dirty %>% terms %>% attr(.,"factors") %>% colnames()
 #' # formula(model_dirty) %>% terms %>% attr(.,"factors") %>% colnames()
-#'
+#' 
 get_x = function(model ,
                  method = c("raw","model","coeff"),
                  data = NULL){
@@ -1795,9 +1795,9 @@ get_x = function(model ,
 #' @param data See \code{\link{get_model_pair}}
 #' @return a list with names as model vars and elements as their corresponding coeff
 #' @examples
-#'
+#' 
 #' get_model_with_coeff(price~  I(carat^   2) + cut  + carat*table, data= ggplot2::diamonds)
-#'
+#' 
 get_model_with_coeff = function(model,data = NULL){
   # depend on get_model_pair
 
@@ -1834,9 +1834,9 @@ get_model_with_coeff = function(model,data = NULL){
 #' @param data, See \code{\link{get_model_pair}}
 #' @return a list with names as model vars and elements as their raw coeff
 #' @examples
-#'
+#' 
 #' get_model_with_raw(price~  I(carat^   2) + cut  + carat*table, data= ggplot2::diamonds)
-#'
+#' 
 get_model_with_raw = function(model,data = NULL){
   # depend on get_model_pair
 
@@ -1878,23 +1878,23 @@ get_model_with_raw = function(model,data = NULL){
 #' The column \code{'n_raw_in_model'} is a numeric field showing how many raw variables are in the corresponding model variables.
 #' For example, the model variable 'I(carat*table)' contains two raw variables: 'carat' and 'table'. See example code for details.
 #' @examples
-#'
+#' 
 #' get_x_all(model = price~  I(carat^   2) + cut  + I(carat*table),data = ggplot2::diamonds)
-#'
-#'
+#' 
+#' 
 #' #________ irregular formulas
 #' model_dirty = lm(price~  I(carat^   2) + cut  - carat:table - cut ,ggplot2::diamonds)
 #' test = get_x_all(model_dirty)
-#'
+#' 
 #' test
 #' test$coeff
 #' # ______  errors _______________
-#'
+#' 
 #' tryCatch(get_x_all(model = price~  I(carat^   2) + cut  + I(carat*table)),
 #'          error = function(x){
 #'            print(x)
 #'          })
-#'
+#' 
 get_x_all = function(model,
                      data = NULL
 ){
@@ -2004,22 +2004,22 @@ get_x_all = function(model,
 #' @param data  the data.frame supposed to be used in modelling
 #' @return a boolean vector with same length as the number of rows of data, with TRUE if a row has full data for the modelling and FALSE if not.
 #' @examples
-#'
+#' 
 #' model = lm(price ~ carat, head(ggplot2::diamonds,1000))
 #' data = head(ggplot2::diamonds,10)
-#'
+#' 
 #' # so observation 1, 4, 7 will be not valid rows
 #' data[c(1,4,7),"price"] = NA
 #' data
 #' get_valid_rows(model,data)
-#'
+#' 
 #' # error message as no "price" is found in the data
 #' data[,"price"] = NULL
 #' tryCatch(get_valid_rows(model,data),
 #'          error = function(x){
 #'            print(x)
 #'          })
-#'
+#' 
 get_valid_rows = function(model, # glm or lm or a formula
                           data # data.frame
 ){
@@ -2093,9 +2093,9 @@ get_valid_rows = function(model, # glm or lm or a formula
 #' @param intercept_include a boolean, whether to include the intercept (default is TRUE).
 #' @return a new model with only focused vars having coeff unchanged, and all other vars having coeff as 0.
 #' @examples
-#'
+#' 
 #' focus_var_raw  = 'carat'
-#'
+#' 
 #' model = lm(price~ cut + carat + I(carat^2) + I(carat^3) +
 #'              I(carat  * depth) + depth,ggplot2::diamonds)
 #' # all coeffs except carat's will be 0
@@ -2104,17 +2104,17 @@ get_valid_rows = function(model, # glm or lm or a formula
 #' focusing_var_coeff(model, focus_var_coeff = 'cut.L')
 #' # all coeffs without raw vars cut or carat will be 0
 #' focusing_var_coeff(model, focus_var_raw = c('cut','carat'))
-#'
+#' 
 #' # if you didn't specify anything, then all vars' coeff will become 0 except intercept
 #' focusing_var_coeff(model)
-#'
-#'
+#' 
+#' 
 #' # if cannot find the focus_var_coeff or focus_var_raw in the model
 #' tryCatch(focusing_var_coeff(model, focus_var_coeff = 'caratdsd'),
 #'          error = function(err) warning(err))
 #' tryCatch(focusing_var_coeff(model, focus_var_raw = '3213'),
 #'          error = function(err) warning(err))
-#'
+#' 
 focusing_var_coeff = function(model,
                               focus_var_coeff = NULL,
                               focus_var_raw = NULL,
@@ -2296,115 +2296,59 @@ focusing_var_coeff = function(model,
 #'\item Monoton_Decrease: whether the marginal impact is Monotonic Decrease.
 #' }
 #' @examples
-#'
+#' 
 #' ##___ unit test ____
-#'
+#' 
 #' # __________________  One Dimension: the most basic case ____________________
-#'
-#' data_used = ggplot2::diamonds
+#' 
+#' 
+#' 
+#' set.seed(413)
+#' traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+#' nrow(traing_data)
+#' 
 #' diamond_lm3 = lm(price~ cut + carat + I(carat^2) +
-#'                    I(carat^3) + I(carat  * depth) + cut:depth, data_used) # a GLM
-#'
+#'                    I(carat^3) + I(carat  * depth) + cut:depth, traing_data) # a GLM
+#' 
 #' # more carats, higher price.
 #' effect(model = diamond_lm3,
-#'        data = ggplot2::diamonds,
+#'        data = traing_data,
 #'        focus_var_raw = c('carat'),
 #'        Reverse = TRUE) # value in x-axis is reverse
-#'
-#'
-#' # Deal with dirty formulas
-#'
-#' diamond_lm_dirty = lm(price~ cut + carat- cut, data_used) # a GLM
-#' # more carats, higher price.
-#' effect(model = diamond_lm_dirty,
-#'        data = ggplot2::diamonds,
-#'        focus_var_raw = c('carat'),
-#'        Reverse = TRUE) # value in x-axis is reverse
-#'
-#'
-#'
-#'
+#' 
 #' # focus on only 'I(carat^3)', which means we will make all other coeff,
 #' # including 'carat' and 'I(carat^2)' into 0
 #' effect(model = diamond_lm3,
-#'        data = ggplot2::diamonds,
+#'        data =traing_data,
 #'        focus_var_raw =c('carat'),
 #'        focus_var_coeff = 'I(carat^3)')
 #' # __________________  One Dimension: Categorical ____________________
-#'
+#' 
 #' # selected model-var to focus: here not focus on cut:depth, only focus on cut
-#' effect(model = diamond_lm3,
-#'        data = ggplot2::diamonds,
-#'        focus_var_raw = c('cut'),
-#'        focus_var_model = 'cut')
-#'
-#' # selected model-var to focus: here not focus on cut:depth, only focus on cut
-#' effect(model = diamond_lm3,
-#'        data = ggplot2::diamonds,
-#'        focus_var_raw = c('cut'),
-#'        focus_var_model = 'cut:depth')
-#'
+#' suppressWarnings(
+#'   effect(model = diamond_lm3,
+#'          data = traing_data,
+#'          focus_var_raw = c('cut'),
+#'          focus_var_model = 'cut'
+#'          )
+#'   )
+#' 
 #' # __________________  Double Dimensions ____________________
-#'
+#' 
 #' # here focus_var_raw has two values: "carat" and "cut"
 #' # that means we will evaluate impact of "carat" on "price" through different value of "cut"
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c('carat',"cut"))
-#'
-#'
-#' # other examples
-#' effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c('carat',"depth"))
-#' effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c("cut","carat"))
-#'
-#'
+#' 
+#' effect(model = diamond_lm3,data = traing_data, focus_var_raw=c('carat',"cut"))
+#' 
 #' # __________________  Provide Values to Focused vars  ____________________
-#'
+#' 
 #' # when evaluating impacts,
 #' # we can provide the range of values for key variables
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
+#' 
+#' effect(model = diamond_lm3,data = traing_data,
 #'        focus_var_raw = c('carat',"cut"),
 #'        focus_value = list(carat=seq(0.5,6,0.1)))
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
-#'        focus_var_raw = c('carat',"cut"),
-#'        focus_value = list(carat=seq(0.5,6,0.1)))
-#'
-#'
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
-#'        focus_var_raw=c('carat',"cut"),
-#'        focus_value = list(carat=seq(0.5,6,0.1),
-#'                           cut = c('Ideal','Premium')
-#'        ))
-#'
-#' # __________________  Provide Values to Non-focus vars  ____________________
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
-#'        focus_var_raw=c('carat',"cut"),
-#'        nonfocus_value = list(depth = 75) # Provide Values to Non-focus vars
-#' )
-#' # if non-key value not provided, the non-key value would be mean or mode,
-#' # in this case: depth's mean is 61.7494
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
-#'        focus_var_raw=c('carat',"cut"))
-#'
-#'
-#' # __________________  Provide Wrong Names  ____________________
-#'
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
-#'        focus_var_raw=c('carat','WRONGNAME'), # Provide Values to Non-focus vars
-#'        nonfocus_value = list(depth = 75)
-#' )
-#'
-#'
-#' effect(model = diamond_lm3,data = ggplot2::diamonds,
-#'        focus_var_raw=c('carat',"cut"),
-#'        focus_value = list(WRONGNAME=seq(0.5,6,0.1),
-#'                           WRONGNAME2 = c('Ideal','Premium')
-#'        ))
-#'
+#' 
 effect = function( model,
                    data = NULL,
                    focus_var_raw , # must be the raw vars in the model
@@ -2719,7 +2663,7 @@ effect = function( model,
   # ________ prepare data for predict() _____________
 
   # this will keep the class
-  modeled_data = expand_grid(all_raw_values,stringsAsFactors = FALSE)
+  modeled_data = expand_grid(all_raw_values, stringsAsFactors = FALSE)
   # modeled_data[,1] %>% class
   model_use = model
   corresponding_coeff = x_pair[x_pair$raw %in% focus_var_raw[1],"coeff"] %>% unique
@@ -2784,7 +2728,10 @@ effect = function( model,
   # when there are focus vars: the key and non-key, we check the monotonic effect under each value of the non-key
   if (length(focus_var_raw) ==2 ) {
 
-    predicted = predicted[order(focus_var_raw[2],focus_var_raw[1]),]
+    predicted = predicted[
+      order(
+        predicted[,focus_var_raw[2]],predicted[,focus_var_raw[1]]
+      ),]
 
     unique_key_focus = unique(predicted[,focus_var_raw[2]])
 
@@ -2882,10 +2829,11 @@ effect = function( model,
     graph = graph + labs(y=y, x = x_title, title = graph_title)
 
 
-    if (Reverse && is_factor_key[1] == 0) {graph = graph + scale_x_reverse() # factor cannot use reverse
+    if (Reverse && is_factor_key[1] == 0) {graph = graph + scale_x_reverse()} # factor cannot use reverse
+
     print(graph)
-    }
   }
+
 
 
   Coeff_table = data.frame(Var = names(model_use$coefficients) ,
@@ -2906,109 +2854,54 @@ effect = function( model,
 
     # __________________  One Dimension: the most basic case ____________________
 
-    data_used = ggplot2::diamonds
+
+
+    set.seed(413)
+    traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+    nrow(traing_data)
+
     diamond_lm3 = lm(price~ cut + carat + I(carat^2) +
-                       I(carat^3) + I(carat  * depth) + cut:depth, data_used) # a GLM
+                       I(carat^3) + I(carat  * depth) + cut:depth, traing_data) # a GLM
 
     # more carats, higher price.
     effect(model = diamond_lm3,
-           data = ggplot2::diamonds,
+           data = traing_data,
            focus_var_raw = c('carat'),
            Reverse = TRUE) # value in x-axis is reverse
-
-
-    # Deal with dirty formulas
-
-    diamond_lm_dirty = lm(price~ cut + carat- cut, data_used) # a GLM
-    # more carats, higher price.
-    effect(model = diamond_lm_dirty,
-           data = ggplot2::diamonds,
-           focus_var_raw = c('carat'),
-           Reverse = TRUE) # value in x-axis is reverse
-
-
-
 
     # focus on only 'I(carat^3)', which means we will make all other coeff,
     # including 'carat' and 'I(carat^2)' into 0
     effect(model = diamond_lm3,
-           data = ggplot2::diamonds,
+           data =traing_data,
            focus_var_raw =c('carat'),
            focus_var_coeff = 'I(carat^3)')
     # __________________  One Dimension: Categorical ____________________
 
     # selected model-var to focus: here not focus on cut:depth, only focus on cut
-    effect(model = diamond_lm3,
-           data = ggplot2::diamonds,
-           focus_var_raw = c('cut'),
-           focus_var_model = 'cut')
-
-    # selected model-var to focus: here not focus on cut:depth, only focus on cut
-    effect(model = diamond_lm3,
-           data = ggplot2::diamonds,
-           focus_var_raw = c('cut'),
-           focus_var_model = 'cut:depth')
+    suppressWarnings(
+      effect(model = diamond_lm3,
+             data = traing_data,
+             focus_var_raw = c('cut'),
+             focus_var_model = 'cut'
+             )
+      )
 
     # __________________  Double Dimensions ____________________
 
     # here focus_var_raw has two values: "carat" and "cut"
     # that means we will evaluate impact of "carat" on "price" through different value of "cut"
 
-    effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c('carat',"cut"))
-
-
-    # other examples
-    effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c('carat',"depth"))
-    effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c("cut","carat"))
-
+    effect(model = diamond_lm3,data = traing_data, focus_var_raw=c('carat',"cut"))
 
     # __________________  Provide Values to Focused vars  ____________________
 
     # when evaluating impacts,
     # we can provide the range of values for key variables
 
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
+    effect(model = diamond_lm3,data = traing_data,
            focus_var_raw = c('carat',"cut"),
            focus_value = list(carat=seq(0.5,6,0.1)))
 
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
-           focus_var_raw = c('carat',"cut"),
-           focus_value = list(carat=seq(0.5,6,0.1)))
-
-
-
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
-           focus_var_raw=c('carat',"cut"),
-           focus_value = list(carat=seq(0.5,6,0.1),
-                              cut = c('Ideal','Premium')
-           ))
-
-    # __________________  Provide Values to Non-focus vars  ____________________
-
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
-           focus_var_raw=c('carat',"cut"),
-           nonfocus_value = list(depth = 75) # Provide Values to Non-focus vars
-    )
-    # if non-key value not provided, the non-key value would be mean or mode,
-    # in this case: depth's mean is 61.7494
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
-           focus_var_raw=c('carat',"cut"))
-
-
-    # __________________  Provide Wrong Names  ____________________
-
-
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
-           focus_var_raw=c('carat','WRONGNAME'), # Provide Values to Non-focus vars
-           nonfocus_value = list(depth = 75)
-    )
-
-
-    effect(model = diamond_lm3,data = ggplot2::diamonds,
-           focus_var_raw=c('carat',"cut"),
-           focus_value = list(WRONGNAME=seq(0.5,6,0.1),
-                              WRONGNAME2 = c('Ideal','Premium')
-           ))
   }
 }
 
@@ -3049,30 +2942,34 @@ effect = function( model,
 #' \item If re_estimate == FALSE, original model will be returned.
 #'}
 #' @examples
-#'
+#' 
 #' ##
+#' set.seed(413)
+#' traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+#' nrow(traing_data)
+#' 
 #' diamond_lm3 = lm(formula = price ~ carat + I(carat^2) + I(carat^3) + cut +
-#'                    I(carat * depth) , data = ggplot2::diamonds)
-#'
-#'
+#'                    I(carat * depth) , data = traing_data)
+#' 
+#' 
 #' test = deleting_wrongeffect(model = diamond_lm3,
 #'                             focus_var_raw = 'carat',
 #'                             focus_var_model = c("I(carat^3)","I(carat*depth)",
 #'                                                 "I(carat^2)","I(carat)"),
 #'                             focus_value = list(carat=seq(0.5,6,0.1)),
-#'                             data = ggplot2::diamonds,
+#'                             data = traing_data,
 #'                             PRINT = TRUE,STOP = FALSE,
 #'                             Reverse = FALSE)
-#'
-#'
+#' 
+#' 
 #' ## two focus on vars
 #' test =
 #'   deleting_wrongeffect(model = diamond_lm3 ,
 #'                        focus_var_raw = c('carat',"cut"),
 #'                        focus_var_model = c("I(carat*depth)","I(carat^3)"),
 #'                        focus_value = list(carat=seq(0.5,6,0.1)),
-#'                        data = ggplot2::diamonds,PRINT = TRUE,STOP =FALSE)
-#'
+#'                        data = traing_data,PRINT = TRUE,STOP =FALSE)
+#' 
 #' diamond_lm3 = lm(formula = price ~ cut + depth +
 #'                    I(carat * depth) , data = ggplot2::diamonds)
 #' ##  negative signs
@@ -3080,15 +2977,16 @@ effect = function( model,
 #'                      focus_var_raw = c('depth',"cut"),
 #'                      focus_var_model = c("depth"),Monoton_to_Match = -1,
 #'                      data = ggplot2::diamonds,PRINT = TRUE,STOP =FALSE)
-#'
+#' 
 #' ## wrong variables names
 #' deleting_wrongeffect(diamond_lm3, focus_var_raw = 'carat',
 #'                      focus_var_model = c("I(cara79t^3)"),
 #'                      data = ggplot2::diamonds,PRINT = TRUE)
+#' 
 #' deleting_wrongeffect(diamond_lm3, focus_var_raw = 'carat890',
 #'                      focus_var_model = c("I(carat^3)"),
 #'                      data = ggplot2::diamonds, PRINT = TRUE)
-#'
+#' 
 deleting_wrongeffect = function (model , # a GLM model
                                  focus_var_raw = NULL,  # see Effect()
                                  focus_var_model= NULL,   # see Effect()
@@ -3232,7 +3130,7 @@ deleting_wrongeffect = function (model , # a GLM model
     if (PRINT)  {
 
       if (control_var==1) {
-        cat("\n initial model: \n")
+        cat("\ninitial model: \n")
         print(summary(model)$coefficient[,c(1,4)])
       }
 
@@ -3316,7 +3214,7 @@ deleting_wrongeffect = function (model , # a GLM model
 
       if ( length(focus_var_model)==0 & correct_effect_ind==0) {
         control_var = length(focus_var_model_0) + 100 # stop
-        if (re_estimate) if (PRINT) cat("\n All model vars with wrong sign have been deleted, nothing to check now. \n")
+        if (re_estimate) if (PRINT) cat("\nAll model vars with wrong sign have been deleted, nothing to check now. \n")
       }
       if  (STOP & correct_effect_ind == 0) {
         Enter_to_Continue()
@@ -3349,8 +3247,12 @@ deleting_wrongeffect = function (model , # a GLM model
   if (FALSE && TRUE){
 
     ##
+    set.seed(413)
+    traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+    nrow(traing_data)
+
     diamond_lm3 = lm(formula = price ~ carat + I(carat^2) + I(carat^3) + cut +
-                       I(carat * depth) , data = ggplot2::diamonds)
+                       I(carat * depth) , data = traing_data)
 
 
     test = deleting_wrongeffect(model = diamond_lm3,
@@ -3358,7 +3260,7 @@ deleting_wrongeffect = function (model , # a GLM model
                                 focus_var_model = c("I(carat^3)","I(carat*depth)",
                                                     "I(carat^2)","I(carat)"),
                                 focus_value = list(carat=seq(0.5,6,0.1)),
-                                data = ggplot2::diamonds,
+                                data = traing_data,
                                 PRINT = TRUE,STOP = FALSE,
                                 Reverse = FALSE)
 
@@ -3369,7 +3271,7 @@ deleting_wrongeffect = function (model , # a GLM model
                            focus_var_raw = c('carat',"cut"),
                            focus_var_model = c("I(carat*depth)","I(carat^3)"),
                            focus_value = list(carat=seq(0.5,6,0.1)),
-                           data = ggplot2::diamonds,PRINT = TRUE,STOP =FALSE)
+                           data = traing_data,PRINT = TRUE,STOP =FALSE)
 
     diamond_lm3 = lm(formula = price ~ cut + depth +
                        I(carat * depth) , data = ggplot2::diamonds)
@@ -3383,6 +3285,7 @@ deleting_wrongeffect = function (model , # a GLM model
     deleting_wrongeffect(diamond_lm3, focus_var_raw = 'carat',
                          focus_var_model = c("I(cara79t^3)"),
                          data = ggplot2::diamonds,PRINT = TRUE)
+
     deleting_wrongeffect(diamond_lm3, focus_var_raw = 'carat890',
                          focus_var_model = c("I(carat^3)"),
                          data = ggplot2::diamonds, PRINT = TRUE)
@@ -3419,31 +3322,36 @@ deleting_wrongeffect = function (model , # a GLM model
 #'
 #'
 #' @examples
-#'
+#' 
 #' # starting model:
 #' # can have a dirty formula like below
-#' diamond_lm3 = lm(formula = price ~ cut + carat - cut   , data = ggplot2::diamonds)
-#'
+#' 
+#' set.seed(413)
+#' traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+#' nrow(traing_data)
+#' 
+#' diamond_lm3 = lm(formula = price ~ cut + carat - cut   , data = traing_data)
+#' 
 #' scope = list(lower = price ~ 1,
 #'              upper = price ~  I(carat^2) + I(carat^3) + I(carat * depth) + depth + carat)
-#'
-#'
+#' 
+#' # traditional stepwise regression with no marginal effect check
 #' model1 = stepwise2(model = diamond_lm3, scope = scope,k = 2,
-#'                    trace = TRUE, data = ggplot2::diamonds, STOP = TRUE)
+#'                    trace = TRUE, data = traing_data, STOP = TRUE)
 #' model1
 #' # result is exactly same using the default step() function.
-#' model2 = step(diamond_lm3,scope = scope, k = 2)
+#' model2 = suppressWarnings(step(diamond_lm3,scope = scope, k = 2))
 #' model2
-#'
-#'
+#' 
+#' 
 #' #__ How to Specify the Correct Marginal Effects in Stepwise Regression  __
-#'
+#' 
 #' # this test_suit means we will check the marginal effect of both 'carat' and 'depth'
 #' # for 'carat', we will only focus on 4 coeff vars :
 #'     # "I(carat^3)","I(carat*depth)","I(carat^2)","carat"
 #' # for 'depth', as we do not specify any particular coeff vars there,
 #' # we will check all coeff var related to 'depth'
-#'
+#' 
 #' test_suit = list(
 #'   carat = list(
 #'     # the list name must be the raw var
@@ -3460,16 +3368,14 @@ deleting_wrongeffect = function (model , # a GLM model
 #'     Monoton_to_Match = 1
 #'   )
 #' )
-#'
+#' 
 #' model3 =  stepwise2(model = diamond_lm3, scope = scope, trace = TRUE,
-#'                     data = ggplot2::diamonds,
+#'                     data = traing_data,
 #'                     STOP = FALSE, test_suit = test_suit)
-#'
-#'
-#'
+#' 
 #' # see the difference from model1
 #' effect(model3,focus_var_raw =  "carat", focus_value =list(carat = seq(0.5,6,0.1)))
-#'
+#' 
 stepwise2 =function (model, # can be an glm/lm/formula,
                      scope,
                      trace = 1,
@@ -3703,17 +3609,22 @@ stepwise2 =function (model, # can be an glm/lm/formula,
 
     # starting model:
     # can have a dirty formula like below
-    diamond_lm3 = lm(formula = price ~ cut + carat - cut   , data = ggplot2::diamonds)
+
+    set.seed(413)
+    traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+    nrow(traing_data)
+
+    diamond_lm3 = lm(formula = price ~ cut + carat - cut   , data = traing_data)
 
     scope = list(lower = price ~ 1,
                  upper = price ~  I(carat^2) + I(carat^3) + I(carat * depth) + depth + carat)
 
-
+    # traditional stepwise regression with no marginal effect check
     model1 = stepwise2(model = diamond_lm3, scope = scope,k = 2,
-                       trace = TRUE, data = ggplot2::diamonds, STOP = TRUE)
+                       trace = TRUE, data = traing_data, STOP = TRUE)
     model1
     # result is exactly same using the default step() function.
-    model2 = step(diamond_lm3,scope = scope, k = 2)
+    model2 = suppressWarnings(step(diamond_lm3,scope = scope, k = 2))
     model2
 
 
@@ -3743,10 +3654,8 @@ stepwise2 =function (model, # can be an glm/lm/formula,
     )
 
     model3 =  stepwise2(model = diamond_lm3, scope = scope, trace = TRUE,
-                        data = ggplot2::diamonds,
+                        data = traing_data,
                         STOP = FALSE, test_suit = test_suit)
-
-
 
     # see the difference from model1
     effect(model3,focus_var_raw =  "carat", focus_value =list(carat = seq(0.5,6,0.1)))

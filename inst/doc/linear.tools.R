@@ -6,7 +6,8 @@ opts_chunk$set(
 )
 
 library(linear.tools)
-# source("/Users/yangguodaxia/linear.tools/linear_tools_origin.R")
+# source("/Users/yangguodaxia/Dropbox/Tech/R/linear_tools_origin.R")
+
 
 ## ------------------------------------------------------------------------
 data = ggplot2::diamonds
@@ -47,6 +48,11 @@ diamond_lm3 = lm(price~  carat + I(carat^2) + I(carat^3) , ggplot2::diamonds) # 
 
 test1 = effect(model = diamond_lm3, focus_var_raw = c('carat'), focus_value =list(carat = seq(0.5,1,0.1))) 
 test1$Monoton_Increase
+
+## ------------------------------------------------------------------------
+test_interaction = effect(model = lm(price~  carat*cut + I(carat^2)*cut, ggplot2::diamonds), 
+       focus_var_raw = c('carat','cut'), focus_value =list(carat = seq(0.5,1,0.1))
+       ) 
 
 ## ------------------------------------------------------------------------
 test2 = effect(model = diamond_lm3, focus_var_raw = c('carat'), focus_value =list(carat = seq(0.5,6,0.1))) 

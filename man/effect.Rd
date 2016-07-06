@@ -102,109 +102,53 @@ This function will take care those cases above and make evaluating marginal impa
 
 # __________________  One Dimension: the most basic case ____________________
 
-data_used = ggplot2::diamonds
+
+
+set.seed(413)
+traing_data = ggplot2::diamonds[runif(nrow(ggplot2::diamonds))<0.05,]
+nrow(traing_data)
+
 diamond_lm3 = lm(price~ cut + carat + I(carat^2) +
-                   I(carat^3) + I(carat  * depth) + cut:depth, data_used) # a GLM
+                   I(carat^3) + I(carat  * depth) + cut:depth, traing_data) # a GLM
 
 # more carats, higher price.
 effect(model = diamond_lm3,
-       data = ggplot2::diamonds,
+       data = traing_data,
        focus_var_raw = c('carat'),
        Reverse = TRUE) # value in x-axis is reverse
-
-
-# Deal with dirty formulas
-
-diamond_lm_dirty = lm(price~ cut + carat- cut, data_used) # a GLM
-# more carats, higher price.
-effect(model = diamond_lm_dirty,
-       data = ggplot2::diamonds,
-       focus_var_raw = c('carat'),
-       Reverse = TRUE) # value in x-axis is reverse
-
-
-
 
 # focus on only 'I(carat^3)', which means we will make all other coeff,
 # including 'carat' and 'I(carat^2)' into 0
 effect(model = diamond_lm3,
-       data = ggplot2::diamonds,
+       data =traing_data,
        focus_var_raw =c('carat'),
        focus_var_coeff = 'I(carat^3)')
 # __________________  One Dimension: Categorical ____________________
 
 # selected model-var to focus: here not focus on cut:depth, only focus on cut
-effect(model = diamond_lm3,
-       data = ggplot2::diamonds,
-       focus_var_raw = c('cut'),
-       focus_var_model = 'cut')
-
-# selected model-var to focus: here not focus on cut:depth, only focus on cut
-effect(model = diamond_lm3,
-       data = ggplot2::diamonds,
-       focus_var_raw = c('cut'),
-       focus_var_model = 'cut:depth')
+suppressWarnings(
+  effect(model = diamond_lm3,
+         data = traing_data,
+         focus_var_raw = c('cut'),
+         focus_var_model = 'cut'
+         )
+  )
 
 # __________________  Double Dimensions ____________________
 
 # here focus_var_raw has two values: "carat" and "cut"
 # that means we will evaluate impact of "carat" on "price" through different value of "cut"
 
-effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c('carat',"cut"))
-
-
-# other examples
-effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c('carat',"depth"))
-effect(model = diamond_lm3,data = ggplot2::diamonds, focus_var_raw=c("cut","carat"))
-
+effect(model = diamond_lm3,data = traing_data, focus_var_raw=c('carat',"cut"))
 
 # __________________  Provide Values to Focused vars  ____________________
 
 # when evaluating impacts,
 # we can provide the range of values for key variables
 
-effect(model = diamond_lm3,data = ggplot2::diamonds,
+effect(model = diamond_lm3,data = traing_data,
        focus_var_raw = c('carat',"cut"),
        focus_value = list(carat=seq(0.5,6,0.1)))
-
-effect(model = diamond_lm3,data = ggplot2::diamonds,
-       focus_var_raw = c('carat',"cut"),
-       focus_value = list(carat=seq(0.5,6,0.1)))
-
-
-
-effect(model = diamond_lm3,data = ggplot2::diamonds,
-       focus_var_raw=c('carat',"cut"),
-       focus_value = list(carat=seq(0.5,6,0.1),
-                          cut = c('Ideal','Premium')
-       ))
-
-# __________________  Provide Values to Non-focus vars  ____________________
-
-effect(model = diamond_lm3,data = ggplot2::diamonds,
-       focus_var_raw=c('carat',"cut"),
-       nonfocus_value = list(depth = 75) # Provide Values to Non-focus vars
-)
-# if non-key value not provided, the non-key value would be mean or mode,
-# in this case: depth's mean is 61.7494
-effect(model = diamond_lm3,data = ggplot2::diamonds,
-       focus_var_raw=c('carat',"cut"))
-
-
-# __________________  Provide Wrong Names  ____________________
-
-
-effect(model = diamond_lm3,data = ggplot2::diamonds,
-       focus_var_raw=c('carat','WRONGNAME'), # Provide Values to Non-focus vars
-       nonfocus_value = list(depth = 75)
-)
-
-
-effect(model = diamond_lm3,data = ggplot2::diamonds,
-       focus_var_raw=c('carat',"cut"),
-       focus_value = list(WRONGNAME=seq(0.5,6,0.1),
-                          WRONGNAME2 = c('Ideal','Premium')
-       ))
 
 }
 

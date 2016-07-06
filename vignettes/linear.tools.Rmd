@@ -1,16 +1,23 @@
 ---
-title: <center> <h1> linear.tools </h1> </center> 
-output: html_document
+title: <center> <h1> linear.tools </h1> </center> <center> <h1>  </h1> </center>
+author: </center> <font size="4">Fan Yang</font> </center> 
+email: </center> <font size="4">yfno1\@msn.com</font> </center> 
+date: 2015-08-10 <center> <h1>  </h1> </center> 
+output: 
+  html_document:
+    toc: true # table of content true
+    depth: 3  # upto three depths of headings (specified by #, ## and ###)
+    number_sections: true  ## if you want number sections at each table header
+    theme: united  # many options for theme, this one is my favorite.
+    highlight: tango  # specifies the syntax highlighting style
 vignette: >
   %\VignetteIndexEntry{linear.tools vignette}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
+
 ---
-<center> <font size="3">Fan Yang</font> </center> 
-<center> <font size="1">yfno1\@msn.com</font> </center> 
+
 <center> <h1>  </h1> </center> 
-
-
 
 This package has two parts: 
 
@@ -25,7 +32,8 @@ opts_chunk$set(
 )
 
 library(linear.tools)
-# source("/Users/yangguodaxia/linear.tools/linear_tools_origin.R")
+# source("/Users/yangguodaxia/Dropbox/Tech/R/linear_tools_origin.R")
+
 ```
 
 
@@ -154,9 +162,17 @@ test1$Monoton_Increase
 ```
 You can see that the model did a good job to model monotonic increasing relations between `carat` and `price` when `carat` ranges from 0.5 to 1 (`$Monoton_Increase` is `True`).
 
-However, when we let the `carat` ranges from 0.5 to 6, the model failed to get the monotonic increasing relations: in the model below, when carat is larger than 3 approximately, the higher the carat, the lower the price!
+PS: A more interesting case is that, if you interact `carat` with the categorical variable `cut`, you can examine the marginal effects `carat` under different categories of `cut`
+```{r}
+test_interaction = effect(model = lm(price~  carat*cut + I(carat^2)*cut, ggplot2::diamonds), 
+       focus_var_raw = c('carat','cut'), focus_value =list(carat = seq(0.5,1,0.1))
+       ) 
+```
+
+
+However, in the model `diamond_lm3` when we let the `carat` ranges from 0.5 to 6, the model failed to get the monotonic increasing relations: in the model below, when carat is larger than 3 approximately, the higher the carat, the lower the price!
   
-  ```{r}
+```{r}
 test2 = effect(model = diamond_lm3, focus_var_raw = c('carat'), focus_value =list(carat = seq(0.5,6,0.1))) 
 test2$Monoton_Increase
 ```
@@ -185,7 +201,7 @@ model_correct_effect
 
 ### stepwise regression with correct marginal effect
 
-Stepwise regression is popular in variable selection, but it failed to consider marginal effects. `stepwise2` enables checking the marginal effects during each step of iteration in stepwise regression; so in each step we will skip those models with wrong marginal effects, and only only choose models among those that have correct marginal effect.
+Stepwise regression is popular in variable selection, but it failed to consider the correctness of marginal effects. `stepwise2` enables checking the marginal effects during each step of iteration in stepwise regression; so in each step we will skip those models with wrong marginal effects, and only only choose models among those that have correct marginal effect.
 
 The example below is to use stepwise regression to find the model with highest BIC and with the correct marginal effect.
 
